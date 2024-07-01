@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework import serializers, routers
-from . import views
+#from .migrations import views
 #from .views import CarreraViewSet
 
 
