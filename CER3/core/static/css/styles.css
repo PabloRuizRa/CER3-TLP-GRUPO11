@@ -1,0 +1,15 @@
+body {
+    font-family: 'Roboto Condensed', 'Roboto' sans-serif;
+}
+
+footer {
+    background-color: #000000;
+    color: white;
+    padding: 20px;
+}
+
+.navbar-custom{
+    background-color: #004b85 !important;
+    color: #ffffff;
+    
+}
