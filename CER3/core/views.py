@@ -1,13 +1,13 @@
 from django.shortcuts import render
-import requests
+from django.http import HttpRequest
 
 # Create your views here.
 
-def home(request):
+def home(request: HttpRequest):
     title = "Inicio"
 
     data = {
         "title" : title,
     }
 
-    return render(request, 'core/home.html',data)
+    return render(request, 'core/base.html',data)
