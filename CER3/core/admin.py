@@ -14,3 +14,16 @@ class RegistroProduccionAdmin(admin.ModelAdmin):
     search_fields = ('combustible__nombre', 'operador__username')
 
 admin.site.register(RegistroProduccion, RegistroProduccionAdmin)
+
+
+class UserSegmentoInline(admin.StackedInline):
+    model = RegistroProduccion  # Esto es solo un ejemplo; cambia 'RegistroProduccion' por el modelo adecuado si tienes otro
+    can_delete = False
+    verbose_name_plural = 'Registros de Producción'
+
+class UserSegmentoAdmin(BaseUserAdmin):
+    inlines = (UserSegmentoInline, )
+
+# Re-registrar el modelo User con la nueva configuración
+admin.site.unregister(User)
+admin.site.register(User, UserSegmentoAdmin)
