@@ -17,6 +17,10 @@ def enviar_notificacion_slack(producto_codigo, planta_codigo, litros_producidos,
         response = client.chat_postMessage(channel=settings.SLACK_CHANNEL, text=message)
     except SlackApiError as e:
         print(f"Error al enviar notificación: {e.response['error']}")
+from django.utils import timezone
+
+def home(request):
+    return render(request, 'core/base.html')
 
 @login_required
 def registrar_produccion(request):
@@ -25,16 +29,19 @@ def registrar_produccion(request):
         if form.is_valid():
             registro = form.save(commit=False)
             registro.operador = request.user
+            registro.fecha_produccion = timezone.now().date()  # Asegurar la fecha y hora correctas
+            registro.hora_registro = timezone.now().time()
             registro.save()
-            litros_totales = RegistroProduccion.objects.filter(combustible=RegistroProduccion.combustible).aggregate(Sum('litros_totales'))['litros_totales__sum']
-            enviar_notificacion_slack(RegistroProduccion.combustible.codigo, RegistroProduccion.combustible.planta.codigo, RegistroProduccion.litros_producidos, litros_totales)
-            return redirect('registro_exitoso')
+            return redirect('core/registro_exitoso')
     else:
-        form = RegistroProduccionForm()
-    return render(request, 'core/base.html', {'form': form})
+        form = RegistroProduccionForm(initial={
+            'fecha_produccion': timezone.now().date(),
+            'hora_registro': timezone.now().time()
+        })
+    return render(request, 'core/registrar_produccion.html', {'form': form})
 
 def registro_exitoso(request):
-    return render(request, 'core/registro/registro_exitoso.html')
+    return render(request, 'core/registro_exitoso.html')
 
 class RegistroProduccionViewSet(viewsets.ModelViewSet):
     queryset = RegistroProduccion.objects.all()
