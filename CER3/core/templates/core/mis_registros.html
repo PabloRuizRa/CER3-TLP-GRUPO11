@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registros del Usuario</title>
+</head>
+<body>
+    <h2>Registros del Usuario</h2>
+    <ul>
+        {% for registro in registros %}
+            <li>
+                {{ registro.detalle }} - {{ registro.fecha_actualizacion }}
+                <a href="{% url 'editar_registro' registro.pk %}">Editar</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+{% endblock content %}

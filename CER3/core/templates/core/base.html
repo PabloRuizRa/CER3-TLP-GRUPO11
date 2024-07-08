@@ -9,7 +9,7 @@
     <meta content="Free HTML Templates" name="description">
     
     <!-- Favicon -->
-    <link href="{% static '/img/favicon.ico' %}" rel="icon">
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
     
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -19,11 +19,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     
     <!-- Libraries Stylesheet -->
-    <link href="{% static '/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
-    <link href="{% static '/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet">
     
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="{% static '/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
 
 <body>
@@ -34,7 +34,6 @@
                 <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
                     <div class="d-inline-flex align-items-center">
                         <p><i></i>Certamen 3</p>
-
                     </div>
                 </div>
             </div>
@@ -54,9 +53,19 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav ml-auto py-0">
-                        <a href="" class="nav-item nav-link active">Login</a>
+                        {% if request.user.is_authenticated %}
+                          {% if es_operador %}
+                            <a href="{% url 'registro' %}" class="nav-item nav-link">Registrar</a>
+                            <a href="{% url 'registros' %}" class="nav-item nav-link">Registros</a>
+                          {% endif %}
+                          <a href="{% url 'exit' %}" class="nav-item nav-link">Salir</a>
+                          {% if es_supervisor %}
+                          <a href="" class="nav-item nav-link">Registrar Producción</a>
+                          {% endif %}
+                        {% else %}
+                          <a href="{% url 'login' %}" class="nav-item nav-link">Ingresar</a>
+                        {% endif %}
                         <a href="" class="nav-item nav-link">About</a>
-
                     </div>
                 </div>
             </nav>
@@ -77,23 +86,19 @@
                 </a>
                 <p>Empresa Nacional de Combustibles (ENC) sistema para el registro, control y
                   análisis de su producción diaria.</p>
-
             </div>
             <div class="col-lg-4 col-md-6 mb-5">
                 <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Our Services</h5>
                 <div class="d-flex flex-column justify-content-start">
                     <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>About</a>
                     <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Sing In</a>
-
                 </div>
             </div>
-
             <div class="col-lg-4 col-md-6 mb-5">
                 <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Contact Us</h5>
                 <p><i class="fa fa-envelope mr-2"></i>Maciel Ripetti</p>
                 <p><i class="fa fa-envelope mr-2"></i>Pablo Ruiz</p>
                 <p><i class="fa fa-envelope mr-2"></i>Juan Guerrero</p>
-                
             </div>
         </div>
     </div>
@@ -117,12 +122,10 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static '/lib/easing/easing.min.js' %}"></script>
-    <script src="{% static '/lib/owlcarousel/owl.carousel.min.js' %}"></script>
-    <script src="{% static '/lib/tempusdominus/js/moment.min.js' %}"></script>
-    <script src="{% static '/lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
-    <script src="{% static '/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
-    
-
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus/js/moment.min.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
 </body>
 </html>

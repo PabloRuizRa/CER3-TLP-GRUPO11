@@ -1,6 +1,8 @@
 from django import forms
-from .models import RegistroProduccion
+from .models import RegistroProduccion, RegistroAuditoriaActualizacion
 from django.utils import timezone
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User, Group
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Group
 
@@ -33,3 +35,8 @@ class Creacion_de_usuario(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'password1', 'password2', 'group')
+
+class RegistroAuditoriaActualizacionForm(forms.ModelForm):
+    class Meta:
+        model = RegistroAuditoriaActualizacion
+        fields = ['detalle']

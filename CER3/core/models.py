@@ -37,3 +37,24 @@ class RegistroProduccion(models.Model):
 
     def __str__(self):
         return f"{self.combustible} - {self.fecha_produccion} - {self.turno}"
+
+
+class RegistroAuditoria(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    fecha_anulacion = models.DateTimeField(auto_now_add=True)
+    registro_produccion_id = models.IntegerField()
+    detalle = models.TextField()
+    
+
+    def str(self):
+        return f"Anulación por {self.usuario.username} el {self.fecha_anulacion}"
+    
+class RegistroAuditoriaActualizacion(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    fecha_actualizacion = models.DateTimeField(auto_now_add=True)
+    registro_produccion_id = models.IntegerField()
+    detalle = models.TextField()
+    
+
+    def str(self):
+        return f"Anulación por {self.usuario.username} el {self.fecha_actualizacion}"
