@@ -11,17 +11,20 @@ class RegistroProduccionForm(forms.ModelForm):
 
     fecha_produccion = forms.DateField(
         initial=timezone.now().date(),
-        widget=forms.TextInput(attrs={'readonly': 'readonly'})
+        widget=forms.TextInput(attrs={'readonly': 'readonly', 'class': 'form-control'})
     )
     hora_registro = forms.TimeField(
         initial=timezone.now().time(),
-        widget=forms.TextInput(attrs={'readonly': 'readonly'})
+        widget=forms.TextInput(attrs={'readonly': 'readonly', 'class': 'form-control'})
     )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
         self.fields['fecha_produccion'].widget.attrs['readonly'] = True
         self.fields['hora_registro'].widget.attrs['readonly'] = True
+
 
 
 class Creacion_de_usuario(UserCreationForm):
