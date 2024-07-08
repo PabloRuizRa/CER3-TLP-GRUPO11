@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+import os
+from dotenv import load_dotenv
 from django.contrib.messages import constants as messages
 
 MESSAGE_TAGS = {
@@ -137,3 +139,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+# Conexión con la API para SLACK
+load_dotenv()
+
+SLACK_TOKEN = os.getenv('SLACK_TOKEN')
+SLACK_CHANNEL = os.getenv('SLACK_CHANNEL')

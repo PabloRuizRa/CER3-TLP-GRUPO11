@@ -12,4 +12,5 @@ urlpatterns = [
     path('logout/', registro_views.exit, name='exit'),
     path('registros/', registro_views.registros, name='registros_usuario'),
     path('editar/<int:registro_id>/', registro_views.editar_registro, name='editar_registro'),
+    path('api/', include('API.urls')),
 ]

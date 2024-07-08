@@ -1,0 +1,5 @@
+# Ignorar un archivo específico
+CER3/.env
+
+# Ignorar todos los archivos .txt en el directorio CER3
+CER3/*.txt
