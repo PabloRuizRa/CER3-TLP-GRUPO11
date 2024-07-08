@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.db.models.signals import pre_delete, pre_save
 from django.dispatch import receiver
-from core.models import RegistroProduccion, RegistroAuditoria  # Ajusta esto a tu estructura de proyecto
+from core.models import RegistroProduccion, RegistroAuditoria, RegistroAuditoriaActualizacion  # Ajusta esto a tu estructura de proyecto
 
 @receiver(pre_delete, sender=RegistroProduccion)
 def log_delete_action(sender, instance, **kwargs):
@@ -26,3 +26,15 @@ def log_delete_action(sender, instance, **kwargs):
             detalle=detalle
         )
 
+@receiver(pre_save, sender=RegistroProduccion)
+def log_update_action(sender, instance, **kwargs):
+    if instance.pk:  # Solo si el registro ya existe (es una actualización)
+        original = RegistroProduccion.objects.get(pk=instance.pk)
+        if original.operador == instance.operador:  # Asegurarse de que el operador que modifica es el mismo que creó el registro
+            user = instance.operador  # Obtener el operador que creó el registro
+            detalle = f"Modificación del registro de producción del operador {instance.operador.username} del Combustible: {instance.combustible.nombre}, Litros producidos: {instance.litros_producidos} ."
+            RegistroAuditoriaActualizacion.objects.create(
+                usuario=user,
+                registro_produccion_id=instance.id,
+                detalle=detalle
+            )
