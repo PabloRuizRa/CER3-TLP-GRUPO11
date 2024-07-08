@@ -10,7 +10,16 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenvfrom django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
+}
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

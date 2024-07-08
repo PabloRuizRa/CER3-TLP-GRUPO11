@@ -20,6 +20,7 @@ def enviar_notificacion_slack(producto_codigo, planta_codigo, litros_producidos,
 
     except SlackApiError as e:
         print(f"Error al enviar notificación: {e.response['error']}")
+from django.contrib import messages
 
 def home(request):
     return render(request, 'core/index.html')
@@ -34,6 +35,8 @@ def registrar_produccion(request):
             registro.combustible = combustible
             registro.operador = request.user
             registro.save()
+            messages.success(request, 'La producción se ha registrado correctamente.')
+            return redirect(registrar_produccion)
             total_litros_producidos = RegistroProduccion.objects.filter(combustible=combustible).aggregate(total=Sum('litros_producidos'))['total']
             enviar_notificacion_slack(combustible.codigo, combustible.planta.codigo, registro.litros_producidos, total_litros_producidos)
             return redirect('core/registro_exitoso')
@@ -41,8 +44,6 @@ def registrar_produccion(request):
         form = RegistroProduccionForm()
     return render(request, 'core/registrar_produccion.html', {'form': form})
 
-def registro_exitoso(request):
-    return render(request, 'core/registro_exitoso.html')
 
 class RegistroProduccionViewSet(viewsets.ModelViewSet):
     queryset = RegistroProduccion.objects.all()
