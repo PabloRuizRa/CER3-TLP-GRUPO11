@@ -16,8 +16,6 @@ from .forms import Creacion_de_usuario
 from django.contrib import messages
 
 def enviar_notificacion_slack(producto_codigo, planta_codigo, litros_producidos, litros_totales):
-    print(f"SLACK_TOKEN: {settings.SLACK_TOKEN}")
-    print(f"SLACK_CHANNEL: {settings.SLACK_CHANNEL}")
     client = WebClient(token=settings.SLACK_TOKEN)
     message = f"{timezone.now()} {planta_codigo} – Nuevo Registro de Producción – {producto_codigo} {litros_producidos} litros registrados | Total Almacenado: {litros_totales}"
     try:
