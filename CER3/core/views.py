@@ -89,10 +89,17 @@ def editar_produccion(request, pk):
         return HttpResponseForbidden("No tienes permiso para editar este registro.")
 
     if request.method == 'POST':
-        form = RegistroAuditoriaActualizacionForm(request.POST, instance=registro)
+        form = RegistroProduccionForm(request.POST, instance=registro)
         if form.is_valid():
             form.save()
-            return redirect('registro_exitoso')
+            # Guardar en el RegistroAuditoriaActualizacion
+            RegistroAuditoriaActualizacionForm.objects.create(
+                usuario=request.user,
+                registro_produccion_id=registro.pk,
+                detalle=f"Actualización del registro de producción con ID {registro.pk}."
+            )
+            messages.success(request, 'La producción se ha registrado correctamente.')
+            return redirect(registros)
     else:
         form = RegistroAuditoriaActualizacionForm(instance=registro)
 

@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h2>Editar Registro de Producción</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-success" role="alert">
+                            {% for message in messages %}
+                                {{ message }}
+                            {% endfor %}
+                        </div>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ form.operador.label_tag }} {{ form.operador }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.turno.label_tag }} {{ form.turno }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.combustible.label_tag }} {{ form.combustible }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.litros_producidos.label_tag }} {{ form.litros_producidos }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.fecha_produccion.label_tag }} {{ form.fecha_produccion }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.hora_registro.label_tag }} {{ form.hora_registro }}
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock content %}

@@ -36,7 +36,7 @@ class RegistroProduccion(models.Model):
     operador = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.combustible} - {self.fecha_produccion} - {self.turno}"
+        return f"{self.combustible} - {self.combustible} - {self.fecha_produccion} - {self.turno}"
 
 
 class RegistroAuditoria(models.Model):

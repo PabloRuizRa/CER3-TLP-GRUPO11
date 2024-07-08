@@ -9,7 +9,7 @@ from django.contrib.auth.models import User, Group
 class RegistroProduccionForm(forms.ModelForm):
     class Meta:
         model = RegistroProduccion
-        fields = ['operador', 'turno', 'combustible', 'litros_producidos']
+        fields = [ 'turno', 'combustible', 'litros_producidos']
 
     fecha_produccion = forms.DateField(
         initial=timezone.now().date(),
@@ -38,5 +38,5 @@ class Creacion_de_usuario(UserCreationForm):
 
 class RegistroAuditoriaActualizacionForm(forms.ModelForm):
     class Meta:
-        model = RegistroAuditoriaActualizacion
-        fields = ['detalle']
+        model = RegistroProduccion
+        fields = ['operador', 'turno', 'combustible', 'litros_producidos']
