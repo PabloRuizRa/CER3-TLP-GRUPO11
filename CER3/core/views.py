@@ -22,9 +22,9 @@ def enviar_notificacion_slack(producto_codigo, planta_codigo, litros_producidos,
         print(f"Error al enviar notificación: {e.response['error']}")
 
 def home(request):
-    return render(request, 'core/base.html')
+    return render(request, 'core/index.html')
 
-@login_required
+
 def registrar_produccion(request):
     if request.method == 'POST':
         form = RegistroProduccionForm(request.POST)
@@ -33,17 +33,12 @@ def registrar_produccion(request):
             combustible = form.cleaned_data['combustible']
             registro.combustible = combustible
             registro.operador = request.user
-            registro.fecha_produccion = timezone.now().date()  # Asegurar la fecha y hora correctas
-            registro.hora_registro = timezone.now().time()
             registro.save()
             total_litros_producidos = RegistroProduccion.objects.filter(combustible=combustible).aggregate(total=Sum('litros_producidos'))['total']
             enviar_notificacion_slack(combustible.codigo, combustible.planta.codigo, registro.litros_producidos, total_litros_producidos)
             return redirect('core/registro_exitoso')
     else:
-        form = RegistroProduccionForm(initial={
-            'fecha_produccion': timezone.now().date(),
-            'hora_registro': timezone.now().time()
-        })
+        form = RegistroProduccionForm()
     return render(request, 'core/registrar_produccion.html', {'form': form})
 
 def registro_exitoso(request):
