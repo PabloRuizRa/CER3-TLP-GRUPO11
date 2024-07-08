@@ -5,6 +5,7 @@ from .forms import RegistroProduccionForm
 from .models import RegistroProduccion
 from .serializers import RegistroProduccionSerializer
 from django.utils import timezone
+from django.contrib import messages
 
 def home(request):
     return render(request, 'core/index.html')
@@ -17,13 +18,12 @@ def registrar_produccion(request):
             registro = form.save(commit=False)
             registro.operador = request.user
             registro.save()
-            return redirect('registro_exitoso')
+            messages.success(request, 'La producción se ha registrado correctamente.')
+            return redirect(registrar_produccion)
     else:
         form = RegistroProduccionForm()
     return render(request, 'core/registrar_produccion.html', {'form': form})
 
-def registro_exitoso(request):
-    return render(request, 'core/registro_exitoso.html')
 
 class RegistroProduccionViewSet(viewsets.ModelViewSet):
     queryset = RegistroProduccion.objects.all()
