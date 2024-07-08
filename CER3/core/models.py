@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.db.models import Sum
+
 
 class Planta(models.Model):
     codigo = models.CharField(max_length=3, unique=True)
@@ -37,3 +39,9 @@ class RegistroProduccion(models.Model):
 
     def __str__(self):
         return f"{self.combustible} - {self.fecha_produccion} - {self.turno}"
+    
+    @property
+    def total_litros_combustible(self):
+        # Calcula y retorna el total de litros producidos para este tipo de combustible
+        total_litros = RegistroProduccion.objects.filter(combustible=self.combustible).aggregate(total=Sum('litros_producidos'))
+        return total_litros['total'] if total_litros['total'] is not None else 0
