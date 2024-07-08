@@ -2,21 +2,52 @@
 {% load static %}
 
 {% block content %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Registros del Usuario</title>
-</head>
 <body>
-    <h2>Registros del Usuario</h2>
-    <ul>
-        {% for registro in registros %}
-            <li>
-                {{ registro.detalle }} - {{ registro.fecha_actualizacion }}
-                <a href="{% url 'editar_registro' registro.pk %}">Editar</a>
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="card-title">Registros del Usuario</h2>
+                    </div>
+                    <div class="card-body">
+                        {% if registros %}
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Detalle</th>
+                                        <th>Fecha de Producción</th>
+                                        <th>Hora de Registro</th>
+                                        <th>Turno</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for registro in registros %}
+                                        <tr>
+                                            <td>{{ registro.combustible.nombre }}</td>
+                                            <td>{{ registro.fecha_produccion }}</td>
+                                            <td>{{ registro.hora_registro }}</td>
+                                            <td>{{ registro.get_turno_display }}</td>
+                                            <td>
+                                                <a href="{% url 'editar_registro' registro.pk %}" class="btn btn-sm btn-warning">Editar</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p class="text-center">No hay registros disponibles.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
 {% endblock content %}

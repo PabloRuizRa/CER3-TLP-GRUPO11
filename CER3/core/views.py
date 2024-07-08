@@ -76,8 +76,8 @@ def registrar_produccion(request):
 @login_required
 @group_required('Operador')
 def registros(request):
-    es_operador = request.user.groups.filter(name='Operador').exists()
-    return render(request, 'core/mis_registros.html', {'es_operador':es_operador})
+    registros = RegistroProduccion.objects.filter(operador=request.user)
+    return render(request, 'core/mis_registros.html', {'registros': registros})
 
 
 @login_required

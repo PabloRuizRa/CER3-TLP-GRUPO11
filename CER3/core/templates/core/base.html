@@ -7,7 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
-    
+
     <!-- Favicon -->
     <link href="{% static 'img/favicon.ico' %}" rel="icon">
     
@@ -56,7 +56,7 @@
                         {% if request.user.is_authenticated %}
                           {% if es_operador %}
                             <a href="{% url 'registro' %}" class="nav-item nav-link">Registrar</a>
-                            <a href="{% url 'registros' %}" class="nav-item nav-link">Registros</a>
+                            <a href="{% url 'registros_usuario' %}" class="nav-item nav-link">Registros</a>
                           {% endif %}
                           <a href="{% url 'exit' %}" class="nav-item nav-link">Salir</a>
                           {% if es_supervisor %}
