@@ -17,6 +17,10 @@ class Combustible(models.Model):
     def __str__(self):
         return f"{self.nombre} ({self.codigo})"
 
+from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
+
 class RegistroProduccion(models.Model):
     TURNO_CHOICES = [
         ('AM', 'Mañana'),
@@ -32,4 +36,4 @@ class RegistroProduccion(models.Model):
     operador = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.combustible.nombre} - {self.fecha_produccion} - {self.turno}"
+        return f"{self.combustible} - {self.fecha_produccion} - {self.turno}"
