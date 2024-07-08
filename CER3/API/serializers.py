@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import RegistroProduccion
+from core.models import RegistroProduccion
 
 class RegistroProduccionSerializer(serializers.ModelSerializer):
     class Meta:

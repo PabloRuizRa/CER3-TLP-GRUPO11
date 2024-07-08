@@ -8,4 +8,5 @@ urlpatterns = [
     path('registro/', registro_views.registrar_produccion),
     path('accounts/', include('django.contrib.auth.urls')),
     path('auth/', include('rest_framework.urls')),
+    path('api/', include('API.urls')),
 ]

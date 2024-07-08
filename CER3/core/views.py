@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from rest_framework import viewsets
 from .forms import RegistroProduccionForm
 from .models import RegistroProduccion
-from .serializers import RegistroProduccionSerializer
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 from django.db.models import Sum
@@ -42,9 +41,3 @@ def registrar_produccion(request):
     else:
         form = RegistroProduccionForm()
     return render(request, 'core/registrar_produccion.html', {'form': form})
-
-
-class RegistroProduccionViewSet(viewsets.ModelViewSet):
-    queryset = RegistroProduccion.objects.all()
-    serializer_class = RegistroProduccionSerializer
-    filterset_fields = ['fecha_produccion', 'turno', 'operador', 'combustible']
