@@ -26,16 +26,3 @@ def log_delete_action(sender, instance, **kwargs):
             detalle=detalle
         )
 
-@receiver(pre_save, sender=RegistroProduccion)
-def log_update_action(sender, instance, **kwargs):
-    if instance.pk:  # Solo si el registro ya existe (es una actualización)
-        original = RegistroProduccion.objects.get(pk=instance.pk)
-        if original.operador == instance.operador:  # Asegurarse de que el operador que modifica es el mismo que creó el registro
-            user = instance.operador  # Obtener el operador que creó el registro
-            detalle = f"Modificación del registro de producción del operador {instance.operador.username} con ID {instance.id}."
-            RegistroAuditoria.objects.create(
-                usuario=user,
-                registro_produccion=instance,
-                accion='MODIFICACION',
-                detalle=detalle
-            )

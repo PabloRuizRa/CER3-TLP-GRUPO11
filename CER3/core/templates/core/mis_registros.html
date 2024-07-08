@@ -15,7 +15,8 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Detalle</th>
+                                        <th>Combustible</th>
+                                        <th>Cantidad</th>
                                         <th>Fecha de Producción</th>
                                         <th>Hora de Registro</th>
                                         <th>Turno</th>
@@ -26,6 +27,7 @@
                                     {% for registro in registros %}
                                         <tr>
                                             <td>{{ registro.combustible.nombre }}</td>
+                                            <td>{{ registro.litros_producidos }}</td>
                                             <td>{{ registro.fecha_produccion }}</td>
                                             <td>{{ registro.hora_registro }}</td>
                                             <td>{{ registro.get_turno_display }}</td>

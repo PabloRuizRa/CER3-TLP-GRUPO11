@@ -77,30 +77,21 @@ def registrar_produccion(request):
 @group_required('Operador')
 def registros(request):
     registros = RegistroProduccion.objects.filter(operador=request.user)
-    return render(request, 'core/mis_registros.html', {'registros': registros})
+    es_operador = request.user.groups.filter(name='Operador').exists()
+    return render(request, 'core/mis_registros.html', {'registros': registros, 'es_operador':es_operador})
+
 
 
 @login_required
 @group_required('Operador')
-def editar_produccion(request, pk):
-    registro = get_object_or_404(RegistroProduccion, pk=pk)
-
-    if registro.operador != request.user:
-        return HttpResponseForbidden("No tienes permiso para editar este registro.")
-
+def editar_registro(request, registro_id):
+    registro = get_object_or_404(RegistroProduccion, id=registro_id)
     if request.method == 'POST':
         form = RegistroProduccionForm(request.POST, instance=registro)
         if form.is_valid():
             form.save()
-            # Guardar en el RegistroAuditoriaActualizacion
-            RegistroAuditoriaActualizacionForm.objects.create(
-                usuario=request.user,
-                registro_produccion_id=registro.pk,
-                detalle=f"Actualización del registro de producción con ID {registro.pk}."
-            )
-            messages.success(request, 'La producción se ha registrado correctamente.')
-            return redirect(registros)
+            return redirect('registros_usuario')
     else:
-        form = RegistroAuditoriaActualizacionForm(instance=registro)
-
-    return render(request, 'core/editar_produccion.html', {'form': form})
+        form = RegistroProduccionForm(instance=registro)
+    es_operador = request.user.groups.filter(name='Operador').exists()
+    return render(request, 'core/editar_produccion.html', {'form': form, 'registro': registro, 'es_operador':es_operador})

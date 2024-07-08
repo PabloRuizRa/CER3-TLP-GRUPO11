@@ -11,5 +11,5 @@ urlpatterns = [
     path('crear_usuario/', registro_views.crear_usuario, name='crear_usuario'),
     path('logout/', registro_views.exit, name='exit'),
     path('registros/', registro_views.registros, name='registros_usuario'),
-    path('editar/<int:pk>/', registro_views.editar_produccion, name='editar_registro'),
+    path('editar/<int:registro_id>/', registro_views.editar_registro, name='editar_registro'),
 ]
