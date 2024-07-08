@@ -1,6 +1,8 @@
 from django import forms
 from .models import RegistroProduccion
 from django.utils import timezone
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User, Group
 
 class RegistroProduccionForm(forms.ModelForm):
     class Meta:
@@ -20,3 +22,11 @@ class RegistroProduccionForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['fecha_produccion'].widget.attrs['readonly'] = True
         self.fields['hora_registro'].widget.attrs['readonly'] = True
+
+
+class Creacion_de_usuario(UserCreationForm):
+    group = forms.ModelChoiceField(queryset=Group.objects.all(), required=True, label="Grupo")
+
+    class Meta:
+        model = User
+        fields = ('username', 'password1', 'password2', 'group')
